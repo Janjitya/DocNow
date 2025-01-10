@@ -1,0 +1,64 @@
+{% extends "users/base.html" %}
+{% load static %}
+
+{% block title %}
+    Edit Profile
+
+{% endblock %}
+
+{% block content %}
+<div class="max-w-lg flex flex-col gap-2 text-sm pt-5 shadow-lg border rounded px-5">
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <img id="photoPreview" src="#" alt="Photo Preview" class="w-36 rounded mb-2">
+        {{profile_form.photo}} 
+
+        <p class="font-medium text-3xl mt-4">
+            {{ request.user.username }}
+        </p> 
+
+        <hr class=" h-[2px] border border-gray-500 mt-2">
+
+        <div>
+            <p class="text-gray-600 underline mt-3">CONTACT INFORMATION</p>
+            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
+                <p class="font-medium">First Name:</p>
+                <p class="text-blue-500">{{ user_form.first_name }}</p>
+                <p class="font-medium">Last Name:</p>
+                <p class="text-blue-500">{{ user_form.last_name }}</p>
+                <p class="font-medium">Email id:</p>
+                <p class="text-blue-500">{{ user_form.email }}</p>
+                <p class="font-medium">Phone:</p>
+                <p class="text-blue-500">{{ profile_form.phone }}</p>
+                <p class="font-medium">Address:</p>
+                <p class="text-gray-500">{{ profile_form.address1 }} 
+                    <br> {{ profile_form.address2 }}
+                </p>
+
+            </div>
+
+        </div>
+
+        <div>
+            <p class="text-gray-600 underline mt-3">BASIC INFORMATION</p>
+            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
+                <p class="font-medium">Gender:</p>
+                <p class="text-blue-500">{{ profile_form.gender }}</p>
+                <p class="font-medium">Age:</p>
+                <p class="text-blue-500">{{ profile_form.age }} yrs</p>
+            </div>
+            
+        </div>
+        <div class="my-10">
+            <button type="submit" class="border border-indigo px-8 py-2 rounded-full hover:bg-indigo-600 hover:text-white transition-all">Save</button>
+        </div>
+        
+    </form>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'users/preview_profile_pic.js' %}"></script>
+{% endblock %}

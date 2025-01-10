@@ -1,0 +1,38 @@
+{% extends "users/base.html" %}
+{% load static %}
+
+{% block title %}
+    All Doctors
+{% endblock %}
+
+{% block content %}
+    <div>
+        <p class="text-gray-600">Browse through the doctors specialist.</p>
+        <div class="flex flex-row items-start gap-5 mt-5">
+            <div class="flex flex-col gap-4 text-sm text-gray-600 ">
+                <a href="{% url 'all_doctors' 'General Physician' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">General physician</a>
+                <a href="{% url 'all_doctors' 'Gynecologist' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">Gynecologist</a>
+                <a href="{% url 'all_doctors' 'Dermatologist' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">Dermatologist</a>
+                <a href="{% url 'all_doctors' 'Paediatrician' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">Paediatrician</a>
+                <a href="{% url 'all_doctors' 'Neurologist' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">Neurologist</a>
+                <a href="{% url 'all_doctors' 'Gastroenterologists' %}" class="w-[94vw] sm:w-auto pl-3 py-1.5 pr-16 border border-gray-300 rounded transition-all cursor-pointer ">Gastroenterologist</a>
+            </div>
+
+            <div class="w-full grid grid-cols-4 gap-4 gap-y-3">
+                {% for doc in docs %}
+                    <a href="{% url 'book_appointment' slug=doc.slug %}">
+                        <div class="border rounded-xl overflow-hidden ">
+                            <img src="{{doc.photo.url}}" alt="" class="bg-gray-100">
+                            <div class="flex items-center gap-2 text-sm text-center text-green-500 py-4 px-4">
+                                <p class="w-2 h-2 rounded-full bg-green-500"></p>
+                                <p>Available</p>
+                            </div>
+                            <p class="text-lg font-medium px-4">{{ doc.name }}</p>
+                            <p class="text-sm px-4 mb-2">{{ doc.speciality }}</p>
+                        </div>
+                    </a>
+                        {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "users/admin_nav.html" %}
+
+{% block title %}
+    Admin Dashboard
+{% endblock %}
+
+{% block content %}
+
+    
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Summary Boxes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <!-- Total Patients -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Patients</h3>
+                    <p class="text-2xl font-bold text-blue-500 mt-2">{{ total_patients }}</p>
+                </div>
+                <!-- Total Doctors -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Doctors</h3>
+                    <p class="text-2xl font-bold text-blue-500 mt-2">{{ total_doctors }}</p>
+                </div>
+                <!-- Total Appointments -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Appointments</h3>
+                    <p class="text-2xl font-bold text-blue-500 mt-2">{{ total_appointments }}</p>
+                </div>
+                <!-- scheduled_appointments -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Scheduled Appointments</h3>
+                    <p class="text-2xl font-bold text-yellow-500 mt-2">{{ scheduled_appointments }}</p>
+                </div>
+                <!-- complete_appointments -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Complete Appointments</h3>
+                    <p class="text-2xl font-bold text-green-500 mt-2">{{ complete_appointments }}</p>
+                </div>
+                <!-- cancelled_appointments -->
+                <div class="bg-white shadow-md rounded-lg p-4">
+                    <h3 class="text-gray-600 text-lg font-semibold">Total Cancelled Appointments</h3>
+                    <p class="text-2xl font-bold text-red-500 mt-2">{{ cancelled_appointments }}</p>
+                </div>
+            </div>
+            
+
+            <!-- Latest Appointments Table -->
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <h3 class="text-gray-600 text-lg font-semibold mb-4">Latest Appointments</h3>
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border-b text-left py-2 px-4">#</th>
+                            <th class="border-b text-left py-2 px-4">Patient Name</th>
+                            <th class="border-b text-left py-2 px-4">Age</th>
+                            <th class="border-b text-left py-2 px-4">Date</th>
+                            <th class="border-b text-left py-2 px-4">Time</th>
+                            <th class="border-b text-left py-2 px-4">Doctor</th>
+                            <th class="border-b text-left py-2 px-4">Fees ($)</th>
+                            <th class="border-b text-left py-2 px-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td class="border-b py-2 px-4">{{ forloop.counter }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.patient.get_full_name }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.patient.age }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.appointment_date }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.appointment_time }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.doctor.name }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.doctor.fees }}</td>
+                            {% if appointment.status == 'Cancelled' %}
+                            <td class="border-b py-2 px-4 text-red-500">{{ appointment.status }}</td>
+                            {% else %}
+                            <td class="border-b py-2 px-4 text-green-500">{{ appointment.status }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+
+{% endblock %}

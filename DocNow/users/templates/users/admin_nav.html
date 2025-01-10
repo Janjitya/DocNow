@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'users/style.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container mx-auto px-4 ">
+
+        <!--navbar-->
+        <nav class="flex items-center justify-between  text-blue-800 p-4">
+                <!-- Website Logo -->
+                <div class="text-lg font-bold ">DocNow</div>
+    
+            <!-- Navigation Links -->
+            <div class="flex space-x-4">
+                <a href="{% url 'logout' %}" class="font-semibold bg-blue-600 text-white rounded-lg px-3 py-2">Logout</a>
+            </div>
+
+        </nav>
+
+        
+        <hr class="border-t-2 border-gray-500 mt-2 mb-5">
+
+        <!--Message section-->
+        {% if messages %}
+            <div class="max-w-4xl mx-auto mt-4">
+                {% for message in messages %}
+                    <div class="alert px-4 py-3 rounded relative border-l-4 mb-4 
+                        {% if message.tags == 'success' %} bg-green-100 border-green-500 text-green-700 
+                        {% elif message.tags == 'error' %} bg-red-100 border-red-500 text-red-700 
+                        {% else %} bg-gray-100 border-gray-500 text-gray-700 
+                        {% endif %}" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                            <svg class="fill-current h-6 w-6 text-current" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
+                                <title>Close</title>
+                                <path d="M14.348 14.849a1 1 0 01-1.415 0L10 11.415l-2.933 2.934a1 1 0 11-1.414-1.415l2.934-2.933-2.934-2.933a1 1 0 011.414-1.415L10 8.586l2.933-2.934a1 1 0 011.414 1.415L11.415 10l2.933 2.933a1 1 0 010 1.415z"/>
+                            </svg>
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="flex ">
+            <!-- Sidebar -->
+            <div class="bg-blue-800 text-white w-1/5 flex flex-col ">
+                <div class="p-6">
+                    <h1 class="text-2xl font-bold text-center">Admin Dashboard</h1>
+                </div>
+                <nav class="mt-8">
+                    <a href="{% url 'admin_dashboard' %}" class="block py-2 px-6 hover:bg-blue-700">Dashboard</a>
+                    <a href="{% url 'admin_appointments' %}" class="block py-2 px-6 hover:bg-blue-700">Appointments</a>
+                    <a href="{% url 'add_doctor' %}" class="block py-2 px-6 hover:bg-blue-700">Add Doctor</a>
+                    <a href="{% url 'admin_doctors' %}" class="block py-2 px-6 hover:bg-blue-700">Doctor List</a>
+                </nav>
+            </div>
+            
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+          
+
+    </div>
+
+
+    <script src="{% static 'users/messages.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock %}
+</body>
+</html>

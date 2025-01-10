@@ -1,0 +1,34 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+<form method="post" class="min-h-[80vh] flex items-center ">
+
+    {% csrf_token %}
+    <div class="flex flex-col gap-3 m-auto mt-10 items-start p-7 w-1/3 border text-sm shadow-lg rounded-xl">
+        <p class="text-2xl font-semibold">Create Account</p>
+        <p class="text-gray-600">Please sign up to book appointment</p>
+
+        <div class="w-full mb-2">
+            <p>Username</p>
+            <div class="border rounded w-full p-2 mt-1">{{user_form.username}}</div>
+        </div>
+        <div class="w-full mb-2">
+            <p>Email</p>
+            <div class="border rounded w-full p-2 mt-1">{{user_form.email}}</div>
+        </div>
+        <div class="w-full mb-2">
+            <p>Password</p>
+            <div class="border rounded w-full p-2 mt-1">{{user_form.password}}</div>
+        </div>
+
+        <button type="submit" class="bg-indigo-800 text-white w-full py-2 my-2 rounded-md text-base">Register</button>
+        <p class="text-gray-600">Already have an account? 
+            <a href="{% url 'login' %}" class="text-indigo-700 underline ">Login here</a>
+        </p>
+    </div>
+</form>
+{% endblock %}

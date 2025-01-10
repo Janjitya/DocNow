@@ -1,0 +1,43 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+    Login as Admin
+{% endblock %}
+
+{% block content %}
+
+<form method="post" class="min-h-[80vh] flex items-center ">
+
+    {% csrf_token %}
+    <div class="flex flex-col gap-3 m-auto mt-10 items-start p-7 w-1/3 border text-sm shadow-lg rounded-xl">
+        <p class="text-2xl font-semibold text-blue-600 ">Login As Admin</p>
+
+        <div class="w-full mb-2">
+            <p>Username</p>
+            <div class="border rounded w-full p-2 mt-1">{{login_form.username}}</div>
+        </div>
+        <div class="w-full mb-2">
+            <p>Password</p>
+            <div class="border rounded w-full p-2 mt-1">{{login_form.password}}</div>
+        </div>
+
+        <button type="submit" class="bg-blue-800 text-white w-full py-2 my-2 rounded-md text-base">Login</button>
+
+        <p class="text-gray-600">Patient Login? 
+            <a href="{% url 'login' %}" class="text-blue-700 underline ">Click here</a>
+        </p>
+    </div>
+</form>
+
+    <!-- Help Text Section -->
+    <div class="mt-4 p-4 bg-blue-100 border border-blue-300 rounded-md">
+        <h3 class="text-sm font-semibold text-blue-700">Admin Login Credentials</h3>
+        <ul class="text-sm text-blue-700 mt-2">
+            <li><strong>Username:</strong> admin</li>
+            <li><strong>Password:</strong> 123</li>
+        </ul>
+    </div>
+
+
+
+{% endblock %}

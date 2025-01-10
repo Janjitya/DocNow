@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'users/style.css' %}">
+    <link rel="stylesheet" href="{% static 'users/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container mx-auto px-4 ">
+
+        <!--navbar-->
+        <nav class="flex items-center justify-between  text-indigo-800 p-4">
+                <!-- Website Logo -->
+                <div class="text-lg font-bold ">
+                    <a href="{% url 'home' %}">DocNow</a>
+                </div>
+    
+            <!-- Navigation Links -->
+            <div class="flex space-x-4">
+                <a href="{% url 'home' %}" class="text-gray-800 font-semibold hover:text-indigo-500">Home</a>
+                <a href="{% url 'all_doctors' 'all' %}" class="text-gray-800 font-semibold hover:text-indigo-500">All Doctors</a>
+                <a href="{% url 'about' %}" class="text-gray-800 font-semibold hover:text-indigo-500">About</a>
+                <a href="{% url 'contact' %}" class="text-gray-800 font-semibold hover:text-indigo-500">Contact</a>
+            </div>
+
+            <!-- User Menu -->
+             {% if request.user.is_authenticated %}
+                <div class="group flex items-center gap-2 relative">
+                    <img src="{{ request.user.profile.photo.url }}" class="w-10 rounded-full" alt="{% static 'users/images/upload_area.png'%}" id="profile-img">
+                    <div class="hidden z-50 absolute top-12 -left-20 border bg-white text-gray-600 shadow-xl p-3 rounded-xl transition-all delay-200" id="profile-popup">
+                        <ul>
+                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-gray-200 cursor-pointer" href="{% url 'profile' %}">My Profile</a></li>
+                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-gray-200 cursor-pointer" href="{% url 'appointments' %}">My Appointment</a></li>
+                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-red-300 cursor-pointer" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+            <a href="{% url 'register' %}" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-light md:block">Create account</a>
+            {% endif %}
+        </nav>
+
+        
+        <hr class="border-t-2 border-gray-500 mt-2 mb-5">
+
+        <!--Message section-->
+        {% if messages %}
+            <div class="max-w-4xl mx-auto mt-4">
+                {% for message in messages %}
+                    <div class="alert px-4 py-3 rounded relative border-l-4 mb-4 
+                        {% if message.tags == 'success' %} bg-green-100 border-green-500 text-green-700 
+                        {% elif message.tags == 'error' %} bg-red-100 border-red-500 text-red-700 
+                        {% else %} bg-gray-100 border-gray-500 text-gray-700 
+                        {% endif %}" role="alert">
+                        <span class="block sm:inline">{{ message }}</span>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                            <svg class="fill-current h-6 w-6 text-current" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onclick="this.parentElement.parentElement.style.display='none';">
+                                <title>Close</title>
+                                <path d="M14.348 14.849a1 1 0 01-1.415 0L10 11.415l-2.933 2.934a1 1 0 11-1.414-1.415l2.934-2.933-2.934-2.933a1 1 0 011.414-1.415L10 8.586l2.933-2.934a1 1 0 011.414 1.415L11.415 10l2.933 2.933a1 1 0 010 1.415z"/>
+                            </svg>
+                        </span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        
+        {% endblock %}
+
+        <!--footer-->
+        <footer class="py-6 mt-40 gap-14">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+              <!-- Left: Company Name -->
+              <div class=" mb-4 md:mb-0 flex-col w-1/3">
+                <span class="text-xl font-bold text-indigo-800">DocNow</span>
+                <p class="text-sm text-gray-600 leading-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, ipsa excepturi. Veritatis dolor fugit doloribus quidem porro. Maiores recusandae alias, debitis odit quasi enim. 
+                     
+                </p>
+              </div>
+              
+              <!-- Middle: Navigation Links -->
+              <div class="flex flex-col gap-2 mb-4 md:mb-0">
+                <p class="text-xl font-medium mb-3">COMPANY</p>
+                <a href="{% url 'home' %}" class="text-sm text-gray-600">Home</a>
+                <a href="{% url 'about' %}" class="text-sm text-gray-600">About Us</a>
+                <a href="{% url 'all_doctors' 'all' %}" class="text-sm text-gray-600">Doctors</a>
+                <a href="{% url 'contact' %}#contact" class="text-sm text-gray-600">Contact</a>
+              </div>
+              
+              <!-- Right: Get in Touch -->
+              <div class="mb-4 md:mb-0">
+                <p class="text-xl font-medium mb-5">GET IN TOUCH</p>
+                <div class="flex flex-col gap-4 text-sm text-gray-600">
+                    <p>+0-000-000-000</p>
+                    <p>contact@company.com</p>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+          <div>
+            <hr class="border-t-2 border-gray-500 mt-2 mb-5">
+          </div>
+          
+
+    </div>
+
+    <script>
+        let pp = document.getElementById('profile-popup');
+        let pi = document.getElementById('profile-img');
+        
+        console.log(pp);
+        
+        pi.addEventListener('click', () => {
+            pp.classList.toggle('hidden');
+        })
+        
+    </script>
+
+    <script src="{% static 'users/messages.js' %}"></script>
+    {% block scripts %}
+
+    {% endblock %}
+</body>
+</html>

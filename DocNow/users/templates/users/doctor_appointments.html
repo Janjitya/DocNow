@@ -1,0 +1,59 @@
+{% extends "users/doctor_nav.html" %}
+{% load static %}
+
+{% block title %}
+    Appointments
+{% endblock %}
+
+{% block content %}
+
+    
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <!-- Appointments Table -->
+            <div class="bg-white shadow-md rounded-lg p-4">
+                <h3 class="text-gray-600 text-lg font-semibold mb-4">Appointments</h3>
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="border-b text-left py-2 px-4">#</th>
+                            <th class="border-b text-left py-2 px-4">Patient Name</th>
+                            <th class="border-b text-left py-2 px-4">Date</th>
+                            <th class="border-b text-left py-2 px-4">Time</th>
+                            <th class="border-b text-left py-2 px-4">Status</th>
+                            <th class="border-b text-left py-2 px-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td class="border-b py-2 px-4">{{ forloop.counter }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.patient.get_full_name }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.appointment_date }}</td>
+                            <td class="border-b py-2 px-4">{{ appointment.appointment_time }}</td>
+                            {% if appointment.status == 'Cancelled' %}
+                            <td class="border-b py-2 px-4 text-red-500">{{ appointment.status }}</td>
+                            {% else %}
+                            <td class="border-b py-2 px-4 text-green-500">{{ appointment.status }}</td>
+                            {% endif %}
+                            {% if appointment.status == 'Scheduled' %}
+                            <td class="border-b py-2 px-4 text-green-500">
+                                <a href="{% url 'complete' id=appointment.id %}" >
+                                    <img class="w-6" src="{% static 'users/images/checked.png' %}" alt="">
+                                </a>
+                            </td>
+                            {% else %}
+                            <td class="border-b py-2 px-4 text-green-500"></td>
+                            {% endif %}
+
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "users/base.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="max-w-lg flex flex-col gap-2 text-sm pt-5 shadow-lg border rounded px-5">
+        <img class="w-36 rounded" src="{{ request.user.profile.photo.url }}" alt="no image" > 
+        <p class="font-medium text-3xl mt-4">
+            {{ request.user.username }}
+        </p> 
+        <hr class="bg-gray-500 h-[1px] border-none">
+        <div>
+            <p class="text-gray-600 underline mt-3">CONTACT INFORMATION</p>
+            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
+                <p class="font-medium">Name:</p>
+                <p class="text-blue-500">{{ request.user.get_full_name }}</p>
+                <p class="font-medium">Email id:</p>
+                <p class="text-blue-500">{{ request.user.email }}</p>
+                <p class="font-medium">Phone:</p>
+                <p class="text-blue-500">{{ request.user.profile.phone }}</p>
+                <p class="font-medium">Address:</p>
+                <p class="text-gray-500">{{ request.user.profile.address1 }} <br> {{ request.user.profile.address2 }}</p>
+
+            </div>
+
+        </div>
+
+        <div>
+            <p class="text-gray-600 underline mt-3">BASIC INFORMATION</p>
+            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
+                <p class="font-medium">Gender:</p>
+                <p class="text-blue-500">{{ request.user.profile.gender }}</p>
+                <p class="font-medium">Age:</p>
+                <p class="text-blue-500">{{ request.user.profile.age }} yrs</p>
+            </div>
+            
+        </div>
+        <div class="my-10">
+            <a href="{% url 'edit_profile' %}" class="border border-indigo px-8 py-2 rounded-full hover:bg-indigo-600 hover:text-white transition-all">Edit</a>
+        </div>
+    </div>
+
+{% endblock %}
