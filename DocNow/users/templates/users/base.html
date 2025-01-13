@@ -33,7 +33,7 @@
             <div class="hidden md:flex items-center space-x-4">
                 {% if request.user.is_authenticated %}
                     <div class="relative group">
-                        <img src="{{ request.user.profile.photo.url }}" class="w-10 h-10 rounded-full cursor-pointer" alt="User Profile" id="profile-img">
+                        <img src="{{ request.user.profile.photo.url }}" onerror="this.onerror=null; this.src='{% static 'users/images/upload_area.png' %}';" class="w-10 h-10 rounded-full cursor-pointer" alt="User Profile" id="profile-img">
                         <div class="hidden  group-hover:block absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50" id="profile-popup">
                             <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
                             <a href="{% url 'appointments' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Appointments</a>
