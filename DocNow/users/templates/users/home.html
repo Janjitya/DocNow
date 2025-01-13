@@ -7,107 +7,75 @@
 
 {% block content %}
 
-    <!--Header div-->
-    <div class="rounded-lg bg-indigo-700  flex flex-row  px-20 ">
-        <div class="flex flex-col justify-center gap-4 items-start py-10 m-auto">
-            <p class="text-5xl text-white font-semibold leading-tight">
-                Book Appointment 
-                <br>
-                With Trusted Doctors
+    <!-- Header Section -->
+    <div class="rounded-lg bg-indigo-700 flex flex-col lg:flex-row px-6 lg:px-20 py-10">
+        <div class="flex flex-col justify-center gap-4 items-start lg:py-10 lg:m-auto text-center lg:text-left">
+            <p class="text-3xl sm:text-4xl lg:text-5xl text-white font-semibold leading-tight">
+                Book Appointment <br class="hidden lg:block"> With Trusted Doctors
             </p>
-            <div class="flex flex-row text-white text-sm text-light items-center gap-3">
-                <img src="{% static 'users/images/group_profiles.png' %}" class="w-28">
+            <div class="flex flex-col lg:flex-row text-white text-sm items-center gap-3">
+                <img src="{% static 'users/images/group_profiles.png' %}" class="w-20 lg:w-28">
                 <p>
-                    Simply browse through our extensive list of trusted doctors,
-                    <br class="hidden sm:block">
-                    schedule your appointment hassle-free. 
+                    Simply browse through our extensive list of trusted doctors, <br class="hidden sm:block">
+                    schedule your appointment hassle-free.
                 </p>
-
-            </div >
-            <a href="{% url 'all_doctors' 'all' %}" class="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-sm hover:bg-indigo-600 hover:text-white">
-                Book appointment 
+            </div>
+            <a href="{% url 'all_doctors' 'all' %}" class="flex items-center gap-2 bg-white px-6 py-3 rounded-full text-sm hover:bg-indigo-600 hover:text-white mt-4">
+                Book Appointment 
                 <img src="{% static 'users/images/arrow.png' %}" class="w-3">
             </a>
         </div>
-
-        <div class="">
-            <img src="{% static 'users/images/header_img.png' %}" class="w-full bottom-0 h-auto rounded-lg">
+        <div class="mt-8 lg:mt-0 ">
+            <img src="{% static 'users/images/header_img.png' %}" class="w-full h-auto rounded-lg">
         </div>
     </div>
 
-    <!--Find by speciality-->
-    <div class="flex flex-col items-center gap-4 py-16">
-        <h1 class="text-3xl font-medium">Find by Speciality</h1>
+    <!-- Find by Speciality Section -->
+    <div class="flex flex-col items-center gap-4 py-10 px-4">
+        <h1 class="text-2xl lg:text-3xl font-medium">Find by Speciality</h1>
         <p class="text-center text-sm">Simply browse through our extensive list of trusted doctors, schedule your appointment hassle-free.</p>
-
-        <div class="flex items-center w-full gap-4 justify-center pt-5 overflow-hidden">
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/General_physician.svg' %}" class="w-16 mb-2">
-                <p>General physician</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 pt-5">
+            {% for speciality in specialities %}
+            <a href="#" class="flex flex-col items-center text-xs">
+                <img src="{{ speciality.icon_url }}" class="w-12 lg:w-16 mb-2">
+                <p>{{ speciality.name }}</p>
             </a>
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/Gynecologist.svg' %}" class="w-16 mb-2">
-                <p>Gynecologist</p>
-            </a>
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/Dermatologist.svg' %}" class="w-16 mb-2">
-                <p>Dermatologist</p>
-            </a>
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/Pediatricians.svg' %}" class="w-16 mb-2">
-                <p>Pediatricians</p>
-            </a>
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/Neurologist.svg' %}" class="w-16 mb-2">
-                <p>Neurologist</p>
-            </a>
-            <a href="#" class="flex flex-col items-center text-xs ">
-                <img src="{% static 'users/images/Gastroenterologist.svg' %}" class="w-16 mb-2">
-                <p>Gastroenterologist</p>
-            </a>
+            {% endfor %}
         </div>
-
     </div>
 
-    <!--Top Doctors-->
-    <div class="flex flex-col items-center gap-4 my-16">
-        <h1 class="text-3xl font-medium">Top Doctors to Book</h1>
+    <!-- Top Doctors Section -->
+    <div class="flex flex-col items-center gap-4 my-10 px-4">
+        <h1 class="text-2xl lg:text-3xl font-medium">Top Doctors to Book</h1>
         <p class="text-center text-sm">Simply browse through our extensive list of trusted doctors.</p>
-
-        <div class="w-full grid grid-cols-4 gap-4 gap-y-4 px-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full max-w-6xl">
             {% for doc in doctors %}
-                <div class="border rounded-xl overflow-hidden ">
-                    <img src="{{doc.photo.url}}" alt="" class="bg-gray-100">
-                    <div class="flex items-center gap-2 text-sm text-center text-green-500 py-4 px-4">
-                        <p class="w-2 h-2 rounded-full bg-green-500"></p>
-                        <p>Available</p>
-                    </div>
-                    <p class="text-lg font-medium px-4">{{ doc.name }}</p>
-                    <p class="text-sm px-4 mb-2">{{ doc.speciality }}</p>
+            <div class="border rounded-xl overflow-hidden">
+                <img src="{{ doc.photo.url }}" alt="{{ doc.name }}" class="bg-gray-100">
+                <div class="flex items-center gap-2 text-sm text-green-500 py-4 px-4">
+                    <p class="w-2 h-2 rounded-full bg-green-500"></p>
+                    <p>Available</p>
                 </div>
-                {% endfor %}
-
+                <p class="text-lg font-medium px-4">{{ doc.name }}</p>
+                <p class="text-sm px-4 mb-2">{{ doc.speciality }}</p>
+            </div>
+            {% endfor %}
         </div>
-        <a href="{% url 'all_doctors' 'all' %}" class="rounded-full px-10 py-3 mt-10 bg-gray-200 text-gray-800">more</a>
-
+        <a href="{% url 'all_doctors' 'all' %}" class="rounded-full px-10 py-3 mt-8 bg-gray-200 text-gray-800">More</a>
     </div>
 
-    <!--create account div-->
-    <div class="rounded-lg bg-indigo-700  flex flex-row  px-20 w-3/4 mx-20">
-        <div class="flex flex-col justify-center gap-4 items-start py-10 m-auto">
-            <p class="text-5xl text-white font-semibold leading-tight">
-                Book Appointment 
-                <br>
-                With 100+ Trusted Doctors
+    <!-- Create Account Section -->
+    <div class="rounded-lg bg-indigo-700 flex flex-col lg:flex-row px-6 lg:px-20 py-10 mx-4 lg:mx-20">
+        <div class="flex flex-col justify-center gap-4 items-center lg:items-start lg:py-10 text-center lg:text-left">
+            <p class="text-3xl sm:text-4xl lg:text-5xl text-white font-semibold leading-tight">
+                Book Appointment <br class="hidden lg:block"> With 100+ Trusted Doctors
             </p>
-
-            <a href="{% url 'register' %}" class="flex items-center gap-2 bg-white px-8 py-3 rounded-full text-sm hover:bg-indigo-600 hover:text-white">
-                Create Account 
+            <a href="{% url 'register' %}" class="flex items-center gap-2 bg-white px-6 py-3 rounded-full text-sm hover:bg-indigo-600 hover:text-white mt-4">
+                Create Account
             </a>
         </div>
-
-        <div class="">
-            <img src="{% static 'users/images/appointment_img.png' %}" class="w-full bottom-0 h-auto rounded-lg">
+        <div class="mt-8 lg:mt-0">
+            <img src="{% static 'users/images/appointment_img.png' %}" class="w-full h-auto rounded-lg">
         </div>
     </div>
 

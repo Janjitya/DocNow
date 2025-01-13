@@ -6,15 +6,13 @@
 {% endblock %}
 
 {% block content %}
-
-    
-
-        <!-- Main Content -->
-        <div class="flex-1 p-6">
-            <!-- Appointments Table -->
-            <div class="bg-white shadow-md rounded-lg p-4">
-                <h3 class="text-gray-600 text-lg font-semibold mb-4">Appointments</h3>
-                <table class="w-full border-collapse">
+    <!-- Main Content -->
+    <div class="flex-1 p-4 md:p-6">
+        <!-- Appointments Table -->
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <h3 class="text-gray-600 text-sm md:text-lg font-semibold mb-4">Appointments</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm md:text-base">
                     <thead>
                         <tr>
                             <th class="border-b text-left py-2 px-4">#</th>
@@ -38,22 +36,19 @@
                             <td class="border-b py-2 px-4 text-green-500">{{ appointment.status }}</td>
                             {% endif %}
                             {% if appointment.status == 'Scheduled' %}
-                            <td class="border-b py-2 px-4 text-green-500">
-                                <a href="{% url 'complete' id=appointment.id %}" >
-                                    <img class="w-6" src="{% static 'users/images/checked.png' %}" alt="">
+                            <td class="border-b py-2 px-4">
+                                <a href="{% url 'complete' id=appointment.id %}">
+                                    <img class="w-6 md:w-8" src="{% static 'users/images/checked.png' %}" alt="Complete">
                                 </a>
                             </td>
                             {% else %}
-                            <td class="border-b py-2 px-4 text-green-500"></td>
+                            <td class="border-b py-2 px-4"></td>
                             {% endif %}
-
                         </tr>
                         {% endfor %}
-
                     </tbody>
                 </table>
             </div>
         </div>
-    
-
+    </div>
 {% endblock %}

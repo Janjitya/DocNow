@@ -13,7 +13,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.IntegerField(null=True)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True, default="static/users/images/upload_area.png")
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True, default="media/users/upload_area.png")
     address1 = models.CharField(max_length=300, null=True)
     address2 = models.CharField(max_length=200, null=True)
     phone    = models.IntegerField(null=True)

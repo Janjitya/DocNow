@@ -5,38 +5,44 @@
 {% endblock %}
 
 {% block content %}
-
-<form method="post" class="min-h-[80vh] flex items-center ">
-
+<form method="post" class="min-h-[80vh] flex items-center">
     {% csrf_token %}
-    <div class="flex flex-col gap-3 m-auto mt-10 items-start p-7 w-1/3 border text-sm shadow-lg rounded-xl">
-        <p class="text-2xl font-semibold">Login</p>
-        <p class="text-gray-600">Please log in to book appointment</p>
+    <div class="flex flex-col gap-3 mx-4 md:m-auto mt-10 items-start p-6 md:p-7 w-full md:w-1/2 lg:w-1/3 border text-sm shadow-lg rounded-xl bg-white">
+        <p class="text-2xl font-semibold text-gray-800">Login</p>
+        <p class="text-gray-600">Please log in to book an appointment</p>
 
-        <div class="w-full mb-2">
-            <p>Username</p>
-            <div class="border rounded w-full p-2 mt-1">{{login_form.username}}</div>
-        </div>
-        <div class="w-full mb-2">
-            <p>Password</p>
-            <div class="border rounded w-full p-2 mt-1">{{login_form.password}}</div>
+        <!-- Username Field -->
+        <div class="w-full">
+            <label for="username" class="block font-medium text-gray-700">Username</label>
+            <div class="border rounded w-full p-2 mt-1">{{ login_form.username }}</div>
         </div>
 
-        <button type="submit" class="bg-indigo-800 text-white w-full py-2 my-2 rounded-md text-base">Login</button>
-        <p class="text-gray-600">Create a new account? 
-            <a href="{% url 'register' %}" class="text-indigo-700 underline ">Click here</a>
+        <!-- Password Field -->
+        <div class="w-full">
+            <label for="password" class="block font-medium text-gray-700">Password</label>
+            <div class="border rounded w-full p-2 mt-1">{{ login_form.password }}</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="bg-indigo-800 text-white w-full py-2 mt-4 rounded-md text-base hover:bg-indigo-900 transition">
+            Login
+        </button>
+
+        <!-- Links for Registration & Other Logins -->
+        <p class="text-gray-600 text-center mt-2">
+            Create a new account? 
+            <a href="{% url 'register' %}" class="text-indigo-700 underline">Click here</a>
         </p>
-        <div class="flex flex-row justify-between gap-4">
-            <p class="text-gray-600">Doctor Login? 
-                <a href="{% url 'doctor_login' %}" class="text-indigo-700 underline ">Click here</a>
+        <div class="flex flex-col sm:flex-row justify-between gap-4 w-full text-center">
+            <p class="text-gray-600">
+                Doctor Login? 
+                <a href="{% url 'doctor_login' %}" class="text-indigo-700 underline">Click here</a>
             </p>
-            <p class="text-gray-600">Admin Login? 
-                <a href="{% url 'admin_login' %}" class="text-indigo-700 underline ">Click here</a>
+            <p class="text-gray-600">
+                Admin Login? 
+                <a href="{% url 'admin_login' %}" class="text-indigo-700 underline">Click here</a>
             </p>
         </div>
     </div>
 </form>
-
-
-
 {% endblock %}

@@ -5,70 +5,69 @@
 {% endblock %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data" class="w-full m-5">
-    <p class="mb-3 text-xl font-medium">Add Doctor</p>
-    <div class="bg-white px-8 py-8 border rounded w-full max-w-4xl max-h-[82vh]  overflow-hidden">
+<form method="post" enctype="multipart/form-data" class="w-full p-4 sm:p-6">
+    <p class="mb-4 text-lg sm:text-xl font-medium">Add Doctor</p>
+    <div class="bg-white px-6 py-6 sm:px-8 sm:py-8 border rounded-lg w-full max-w-4xl mx-auto overflow-hidden">
         {% csrf_token %}
-        <div class="flex items-center gap-4 mb-8 text-gray-500">
-            <label for="doc-img">
-                <img class="w-16 bg-gray-100 rounded-full " src="{% static 'users/images/upload_area.png' %}" alt="">
+        <div class="flex items-center gap-4 mb-6 text-gray-500">
+            <label for="doc-img" class="cursor-pointer">
+                <img class="w-12 sm:w-16 bg-gray-100 rounded-full" src="{% static 'users/images/upload_area.png' %}" alt="Upload">
             </label>
             {{ form.photo }}
-            <p>
-                Upload doctor
-                <br>
-                picture
-            </p>
+            <p class="text-sm sm:text-base">Upload doctor<br>picture</p>
         </div>
 
-        <div class="flex flex-col lg:flex-row items-start gap-10 text-gray-600">
+        <div class="flex flex-col lg:flex-row gap-6 text-gray-600">
+            <!-- Left Column -->
             <div class="w-full lg:flex-1 flex flex-col gap-4">
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Doctor Name</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.name}}</div>
+                    <label for="name" class="text-sm font-medium">Doctor Name</label>
+                    <div class="border rounded px-3 py-2">{{ form.name }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Doctor Email</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.email}}</div>
+                    <label for="email" class="text-sm font-medium">Doctor Email</label>
+                    <div class="border rounded px-3 py-2">{{ form.email }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Set Password</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.password}}</div>
+                    <label for="password" class="text-sm font-medium">Set Password</label>
+                    <div class="border rounded px-3 py-2">{{ form.password }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Experience</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.experience}}</div>
+                    <label for="experience" class="text-sm font-medium">Experience</label>
+                    <div class="border rounded px-3 py-2">{{ form.experience }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Fees</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.fees}}</div>
+                    <label for="fees" class="text-sm font-medium">Fees</label>
+                    <div class="border rounded px-3 py-2">{{ form.fees }}</div>
                 </div>
             </div>
 
+            <!-- Right Column -->
             <div class="w-full lg:flex-1 flex flex-col gap-4">
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Speciality</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.speciality}}</div>
+                    <label for="speciality" class="text-sm font-medium">Speciality</label>
+                    <div class="border rounded px-3 py-2">{{ form.speciality }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Degree</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.degree}}</div>
+                    <label for="degree" class="text-sm font-medium">Degree</label>
+                    <div class="border rounded px-3 py-2">{{ form.degree }}</div>
                 </div>
                 <div class="flex-1 flex flex-col gap-1">
-                    <p>Address</p>
-                    <div class="border rounded  px-3 py-2 ">{{form.address1}}</div>
-                    <div class="border rounded  px-3 py-2 ">{{form.address2}}</div>
+                    <label for="address1" class="text-sm font-medium">Address</label>
+                    <div class="border rounded px-3 py-2">{{ form.address1 }}</div>
+                    <div class="border rounded px-3 py-2 mt-2">{{ form.address2 }}</div>
                 </div>
             </div>
-
-        </div>
-        <div>
-            <p>About</p>
-            <div class="border rounded w-full px-3 py-2 ">{{form.about}}</div>
         </div>
 
-        <button type="submit" class="rounded-full px-3 py-2 mt-4 bg-indigo-800 text-white">Add Doctor</button>
+        <div class="mt-4">
+            <label for="about" class="text-sm font-medium">About</label>
+            <div class="border rounded w-full px-3 py-2">{{ form.about }}</div>
+        </div>
+
+        <button type="submit" class="rounded-full px-6 py-2 mt-6 bg-indigo-800 text-white text-sm sm:text-base hover:bg-indigo-700">
+            Add Doctor
+        </button>
     </div>
-    
 </form>
 {% endblock %}

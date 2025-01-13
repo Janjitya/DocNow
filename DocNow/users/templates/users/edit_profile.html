@@ -3,60 +3,74 @@
 
 {% block title %}
     Edit Profile
-
 {% endblock %}
 
 {% block content %}
-<div class="max-w-lg flex flex-col gap-2 text-sm pt-5 shadow-lg border rounded px-5">
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <img id="photoPreview" src="#" alt="Photo Preview" class="w-36 rounded mb-2">
-        {{profile_form.photo}} 
-
-        <p class="font-medium text-3xl mt-4">
-            {{ request.user.username }}
-        </p> 
-
-        <hr class=" h-[2px] border border-gray-500 mt-2">
-
-        <div>
-            <p class="text-gray-600 underline mt-3">CONTACT INFORMATION</p>
-            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
-                <p class="font-medium">First Name:</p>
-                <p class="text-blue-500">{{ user_form.first_name }}</p>
-                <p class="font-medium">Last Name:</p>
-                <p class="text-blue-500">{{ user_form.last_name }}</p>
-                <p class="font-medium">Email id:</p>
-                <p class="text-blue-500">{{ user_form.email }}</p>
-                <p class="font-medium">Phone:</p>
-                <p class="text-blue-500">{{ profile_form.phone }}</p>
-                <p class="font-medium">Address:</p>
-                <p class="text-gray-500">{{ profile_form.address1 }} 
-                    <br> {{ profile_form.address2 }}
-                </p>
-
+<div class="p-4 flex justify-center">
+    <div class="w-full max-w-lg flex flex-col gap-4 text-sm bg-white shadow-lg border rounded-lg p-6">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Profile Photo -->
+            <div class="flex flex-col items-center">
+                <img 
+                    id="photoPreview" 
+                    src="#" 
+                    alt="Photo Preview" 
+                    class="w-24 h-24 sm:w-36 sm:h-36 rounded-full object-cover mb-4 bg-gray-100">
+                <label for="profile_photo" class="font-medium text-gray-700">Change Profile Picture</label>
+                {{ profile_form.photo }}
             </div>
 
-        </div>
-
-        <div>
-            <p class="text-gray-600 underline mt-3">BASIC INFORMATION</p>
-            <div class="grid grid-cols-2 gap-y-2.5 mt-3 ">
-                <p class="font-medium">Gender:</p>
-                <p class="text-blue-500">{{ profile_form.gender }}</p>
-                <p class="font-medium">Age:</p>
-                <p class="text-blue-500">{{ profile_form.age }} yrs</p>
-            </div>
+            <!-- Username -->
+            <p class="font-medium text-xl sm:text-2xl text-center text-gray-800">
+                {{ request.user.username }}
+            </p>
             
-        </div>
-        <div class="my-10">
-            <button type="submit" class="border border-indigo px-8 py-2 rounded-full hover:bg-indigo-600 hover:text-white transition-all">Save</button>
-        </div>
-        
-    </form>
+            <hr class="bg-gray-300 h-px border-none my-4">
+
+            <!-- Contact Information -->
+            <div>
+                <p class="text-gray-600 underline text-lg">Contact Information</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 mt-4">
+                    <p class="font-medium">First Name:</p>
+                    <div>{{ user_form.first_name }}</div>
+                    <p class="font-medium">Last Name:</p>
+                    <div>{{ user_form.last_name }}</div>
+                    <p class="font-medium">Email:</p>
+                    <div>{{ user_form.email }}</div>
+                    <p class="font-medium">Phone:</p>
+                    <div>{{ profile_form.phone }}</div>
+                    <p class="font-medium">Address:</p>
+                    <div>
+                        {{ profile_form.address1 }}
+                        <br>
+                        {{ profile_form.address2 }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Basic Information -->
+            <div class="mt-6">
+                <p class="text-gray-600 underline text-lg">Basic Information</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 mt-4">
+                    <p class="font-medium">Gender:</p>
+                    <div>{{ profile_form.gender }}</div>
+                    <p class="font-medium">Age:</p>
+                    <div>{{ profile_form.age }} yrs</div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="flex justify-center mt-6">
+                <button 
+                    type="submit" 
+                    class="border border-indigo-600 px-8 py-2 rounded-full text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
-
 {% endblock %}
 
 {% block scripts %}

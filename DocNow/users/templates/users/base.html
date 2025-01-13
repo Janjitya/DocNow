@@ -12,41 +12,63 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container mx-auto px-4 ">
+    <div class="container mx-auto px-4">
 
         <!--navbar-->
-        <nav class="flex items-center justify-between  text-indigo-800 p-4">
-                <!-- Website Logo -->
-                <div class="text-lg font-bold ">
-                    <a href="{% url 'home' %}">DocNow</a>
-                </div>
-    
+        <nav class="flex items-center justify-between p-4 text-indigo-800">
+            <!-- Website Logo -->
+            <div class="text-lg font-bold">
+                <a href="{% url 'home' %}">DocNow</a>
+            </div>
+
             <!-- Navigation Links -->
-            <div class="flex space-x-4">
+            <div class="hidden md:flex space-x-4">
                 <a href="{% url 'home' %}" class="text-gray-800 font-semibold hover:text-indigo-500">Home</a>
                 <a href="{% url 'all_doctors' 'all' %}" class="text-gray-800 font-semibold hover:text-indigo-500">All Doctors</a>
                 <a href="{% url 'about' %}" class="text-gray-800 font-semibold hover:text-indigo-500">About</a>
                 <a href="{% url 'contact' %}" class="text-gray-800 font-semibold hover:text-indigo-500">Contact</a>
             </div>
 
-            <!-- User Menu -->
-             {% if request.user.is_authenticated %}
-                <div class="group flex items-center gap-2 relative">
-                    <img src="{{ request.user.profile.photo.url }}" class="w-10 rounded-full" alt="{% static 'users/images/upload_area.png'%}" id="profile-img">
-                    <div class="hidden z-50 absolute top-12 -left-20 border bg-white text-gray-600 shadow-xl p-3 rounded-xl transition-all delay-200" id="profile-popup">
-                        <ul>
-                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-gray-200 cursor-pointer" href="{% url 'profile' %}">My Profile</a></li>
-                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-gray-200 cursor-pointer" href="{% url 'appointments' %}">My Appointment</a></li>
-                            <li><a class="whitespace-nowrap block px-3 py-1 rounded-lg hover:bg-red-300 cursor-pointer" href="{% url 'logout' %}">Logout</a></li>
-                        </ul>
+            <!-- User Profile Section -->
+            <div class="hidden md:flex items-center space-x-4">
+                {% if request.user.is_authenticated %}
+                    <div class="relative group">
+                        <img src="{{ request.user.profile.photo.url }}" class="w-10 h-10 rounded-full cursor-pointer" alt="User Profile" id="profile-img">
+                        <div class="hidden  group-hover:block absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50" id="profile-popup">
+                            <a href="{% url 'profile' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Profile</a>
+                            <a href="{% url 'appointments' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Appointments</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100">Logout</a>
+                        </div>
                     </div>
-                </div>
-            {% else %}
-            <a href="{% url 'register' %}" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-light md:block">Create account</a>
-            {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}" class="text-gray-800 font-semibold hover:text-indigo-500">Login</a>
+                    <a href="{% url 'register' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-full font-light">Create Account</a>
+                {% endif %}
+            </div>
+
+            <!-- Hamburger Menu for Mobile -->
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-indigo-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
         </nav>
 
-        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden space-y-2">
+            <a href="{% url 'home' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">Home</a>
+            <a href="{% url 'all_doctors' 'all' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">All Doctors</a>
+            <a href="{% url 'about' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">About</a>
+            <a href="{% url 'contact' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">Contact</a>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">My Profile</a>
+                <a href="{% url 'appointments' %}" class="block text-gray-800 font-semibold hover:text-indigo-500">My Appointments</a>
+                <a href="{% url 'logout' %}" class="block text-red-600 font-semibold hover:text-red-500">Logout</a>
+            {% endif %}
+        </div>
+
         <hr class="border-t-2 border-gray-500 mt-2 mb-5">
 
         <!--Message section-->
@@ -75,58 +97,57 @@
         {% endblock %}
 
         <!--footer-->
-        <footer class="py-6 mt-40 gap-14">
-            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
-              <!-- Left: Company Name -->
-              <div class=" mb-4 md:mb-0 flex-col w-1/3">
-                <span class="text-xl font-bold text-indigo-800">DocNow</span>
-                <p class="text-sm text-gray-600 leading-6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, ipsa excepturi. Veritatis dolor fugit doloribus quidem porro. Maiores recusandae alias, debitis odit quasi enim. 
-                     
-                </p>
-              </div>
-              
-              <!-- Middle: Navigation Links -->
-              <div class="flex flex-col gap-2 mb-4 md:mb-0">
-                <p class="text-xl font-medium mb-3">COMPANY</p>
-                <a href="{% url 'home' %}" class="text-sm text-gray-600">Home</a>
-                <a href="{% url 'about' %}" class="text-sm text-gray-600">About Us</a>
-                <a href="{% url 'all_doctors' 'all' %}" class="text-sm text-gray-600">Doctors</a>
-                <a href="{% url 'contact' %}#contact" class="text-sm text-gray-600">Contact</a>
-              </div>
-              
-              <!-- Right: Get in Touch -->
-              <div class="mb-4 md:mb-0">
-                <p class="text-xl font-medium mb-5">GET IN TOUCH</p>
-                <div class="flex flex-col gap-4 text-sm text-gray-600">
-                    <p>+0-000-000-000</p>
-                    <p>contact@company.com</p>
+        <footer class="py-6 mt-40 ">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-14">
+                <!-- Column 1 -->
+                <div>
+                    <span class="text-xl font-bold text-indigo-800">DocNow</span>
+                    <p class="text-sm text-gray-600 leading-6">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, ipsa excepturi. Veritatis dolor fugit doloribus quidem porro. Maiores recusandae alias, debitis odit quasi enim.
+                    </p>
                 </div>
-              </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <p class="text-xl font-medium mb-3">COMPANY</p>
+                    <a href="{% url 'home' %}" class="text-sm text-gray-600 block">Home</a>
+                    <a href="{% url 'about' %}" class="text-sm text-gray-600 block">About Us</a>
+                    <a href="{% url 'all_doctors' 'all' %}" class="text-sm text-gray-600 block">Doctors</a>
+                    <a href="{% url 'contact' %}#contact" class="text-sm text-gray-600 block">Contact</a>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <p class="text-xl font-medium mb-5">GET IN TOUCH</p>
+                    <p class="text-sm text-gray-600">+0-000-000-000</p>
+                    <p class="text-sm text-gray-600">contact@company.com</p>
+                </div>
             </div>
-          </footer>
+        </footer>
 
-          <div>
-            <hr class="border-t-2 border-gray-500 mt-2 mb-5">
-          </div>
-          
-
+        <hr class="border-t-2 border-gray-500 mt-2 mb-5">
     </div>
 
     <script>
-        let pp = document.getElementById('profile-popup');
-        let pi = document.getElementById('profile-img');
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const pp = document.getElementById('profile-popup');
+        const pi = document.getElementById('profile-img');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
         
-        console.log(pp);
         
         pi.addEventListener('click', () => {
             pp.classList.toggle('hidden');
         })
-        
     </script>
 
     <script src="{% static 'users/messages.js' %}"></script>
     {% block scripts %}
-
     {% endblock %}
 </body>
 </html>

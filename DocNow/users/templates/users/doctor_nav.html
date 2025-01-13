@@ -11,25 +11,25 @@
     <link rel="stylesheet" href="{% static 'users/styles.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container mx-auto px-4 ">
+<body class="bg-gray-50 text-gray-800 font-roboto">
+    <div class="container mx-auto px-4">
 
-        <!--navbar-->
-        <nav class="flex items-center justify-between  text-blue-800 p-4">
-                <!-- Website Logo -->
-                <div class="text-lg font-bold ">DocNow</div>
-    
+        <!-- Navbar -->
+        <nav class="flex items-center justify-between bg-white text-blue-800 p-4 shadow-md">
+            <!-- Website Logo -->
+            <div class="text-lg font-bold">DocNow</div>
+
             <!-- Navigation Links -->
             <div class="flex space-x-4">
-                <a href="{% url 'doctor_logout' %}" class="font-semibold bg-blue-600 text-white rounded-lg px-3 py-2">Logout</a>
+                <a href="{% url 'doctor_logout' %}" class="font-semibold bg-blue-600 text-white rounded-lg px-3 py-2 hover:bg-blue-700 transition-all">
+                    Logout
+                </a>
             </div>
-
         </nav>
 
-        
-        <hr class="border-t-2 border-gray-500 mt-2 mb-5">
+        <hr class="border-t-2 border-gray-200 mt-2 mb-5">
 
-        <!--Message section-->
+        <!-- Message Section -->
         {% if messages %}
             <div class="max-w-4xl mx-auto mt-4">
                 {% for message in messages %}
@@ -50,30 +50,28 @@
             </div>
         {% endif %}
 
-        <div class="flex h-screen">
+        <div class="flex flex-col md:flex-row h-auto md:h-screen">
             <!-- Sidebar -->
-            <div class="bg-blue-800 text-white w-1/5 flex flex-col">
+            <div class="bg-blue-800 text-white w-full md:w-1/5 flex flex-col">
                 <div class="p-6">
                     <h1 class="text-2xl font-bold text-center">Doctor Dashboard</h1>
                 </div>
-                <nav class="mt-8">
-                    <a href="{% url 'doctor_dashboard' %}" class="block py-2 px-6 hover:bg-blue-700">Dashboard</a>
-                    <a href="{% url 'doctor_appointments' %}" class="block py-2 px-6 hover:bg-blue-700">Appointments</a>
+                <nav class="mt-4">
+                    <a href="{% url 'doctor_dashboard' %}" class="block py-2 px-4 hover:bg-blue-700 text-sm md:text-base">Dashboard</a>
+                    <a href="{% url 'doctor_appointments' %}" class="block py-2 px-4 hover:bg-blue-700 text-sm md:text-base">Appointments</a>
                 </nav>
             </div>
-            
-            {% block content %}
-            
-            {% endblock %}
+
+            <!-- Main Content -->
+            <div class="flex-grow bg-white p-4 md:p-6 shadow-lg">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
-          
-
     </div>
-
 
     <script src="{% static 'users/messages.js' %}"></script>
     {% block scripts %}
-
     {% endblock %}
 </body>
 </html>

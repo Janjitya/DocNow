@@ -6,43 +6,46 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <p class="text-gray-700 mt-12 text-lg font-medium border-b pb-3">My appointments</p>
+<div class="p-4 sm:p-8">
+    <p class="text-gray-700 text-lg font-medium border-b pb-3 mb-4">My Appointments</p>
 
-        <div>
-            <div>
-                {% for appointment in appointments %}
-                <div class="flex flex-row gap-4 py-4 border-b">
-                    <div>
-                        <img class="w-36 bg-gray-300" src="{{appointment.doctor.photo.url}}" alt="">
-                    </div>
-                    <div class="flex flex-col flex-grow gap-0.5 text-sm ">
-                        <p class="text-base font-semibold">{{appointment.doctor.name}}</p>
-                        <p>{{ appointment.doctor.speciality }}</p>
-                        <p class="text-[#464646] font-medium mt-1">Address:</p>
-                        <p>{{ appointment.doctor.address1 }}</p>
-                        <p>{{ appointment.doctor.address2 }}</p>
-                        <p class="mt-1">
-                            <span class="text-sm text-[#3C3C3C] font-medium">Date &amp; Time:</span>
-                            {{ appointment.appointment_date }} | {{ appointment.appointment_time }}
-                        </p>
-                    </div>
-                    <div></div>
-                    <div class="flex flex-col gap-2 justify-end text-sm text-center">
-                        {% if appointment.status == 'Scheduled' %}
-                            <a href="#" class="py-2 px-2 border rounded hover:bg-indigo-600 hover:text-white transition-all duration-300">Pay Online</a>
-                            <a href="{% url 'cancel' id=appointment.id %}" class="py-2 px-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-300">Cancel appointment</a>
-                        {% endif %}
-                        {% if appointment.status == 'Cancelled' %}
-                            <p class="text-lg text-red-600 font-semibold">CANCELLED</p>
-                        {% elif appointment.status == 'Complete' %}
-                            <p class="text-lg text-green-600 font-semibold ">Complete</p>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
+    <div class="space-y-6">
+        {% for appointment in appointments %}
+        <div class="flex flex-col sm:flex-row gap-4 py-4 border-b">
+            <!-- Doctor's Photo -->
+            <div class="flex-shrink-0">
+                <img class="w-full sm:w-36 sm:h-36 sm:object-cover bg-gray-300 rounded" src="{{appointment.doctor.photo.url}}" alt="Doctor's photo">
+            </div>
+
+            <!-- Appointment Details -->
+            <div class="flex flex-col flex-grow text-sm">
+                <p class="text-base font-semibold text-gray-800">{{appointment.doctor.name}}</p>
+                <p class="text-gray-600">{{ appointment.doctor.speciality }}</p>
+                <p class="text-[#464646] font-medium mt-2">Address:</p>
+                <p class="text-gray-600">{{ appointment.doctor.address1 }}</p>
+                <p class="text-gray-600">{{ appointment.doctor.address2 }}</p>
+                <p class="mt-2">
+                    <span class="text-sm text-[#3C3C3C] font-medium">Date &amp; Time:</span>
+                    {{ appointment.appointment_date }} | {{ appointment.appointment_time }}
+                </p>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="flex flex-col items-center sm:items-end gap-2">
+                {% if appointment.status == 'Scheduled' %}
+                    <a href="#" class="py-2 px-4 border rounded text-sm text-gray-800 hover:bg-indigo-600 hover:text-white transition-all duration-300">Pay Online</a>
+                    <a href="{% url 'cancel' id=appointment.id %}" class="py-2 px-4 border rounded text-sm text-gray-800 hover:bg-red-600 hover:text-white transition-all duration-300">Cancel Appointment</a>
+                {% endif %}
+                {% if appointment.status == 'Cancelled' %}
+                    <p class="text-lg text-red-600 font-semibold">CANCELLED</p>
+                {% elif appointment.status == 'Complete' %}
+                    <p class="text-lg text-green-600 font-semibold">COMPLETE</p>
+                {% endif %}
             </div>
         </div>
-
+        {% empty %}
+        <p class="text-gray-600 text-center py-4">You have no appointments.</p>
+        {% endfor %}
     </div>
+</div>
 {% endblock %}

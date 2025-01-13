@@ -8,7 +8,7 @@ from django.contrib.messages import constants as message_constants
 from django.views.decorators.cache import cache_control
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.sessions.models import Session
-from datetime import time, timedelta
+from datetime import datetime, timedelta
 
 MESSAGE_TAGS = {
     message_constants.SUCCESS: 'success bg-green-100 text-green-800 border-green-300',
@@ -230,15 +230,30 @@ def doctor_appointments(request):
 
     return render(request, "users/doctor_appointments.html", context=context)
 
+def generate_time_choices():
+    start_time = datetime.strptime("10:00", "%H:%M")
+    end_time = datetime.strptime("20:00", "%H:%M")
+
+    times = []
+
+    while start_time <= end_time:
+        time_str = start_time.strftime("%H:%M")  
+        times.append((time_str, time_str))  
+        start_time += timedelta(minutes=30)  
+    
+    return times
+
 # appointments views
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def book_appointment(request, slug):
 
+    time_choices = generate_time_choices()
     doctor = get_object_or_404(Doctor, slug=slug)
     patient = request.user
     if request.method == 'POST':
         form = BookAppointmentForm(data=request.POST)
+        form.fields['appointment_time'].choices = time_choices
 
         if form.is_valid():
             new_form = form.save(commit=False)
@@ -252,6 +267,7 @@ def book_appointment(request, slug):
 
     context = {'form':form,
                'doctor':doctor,
+               'time_choices': time_choices,
                }
 
     return render(request, "users/book_appointment.html",context=context)

@@ -1,4 +1,6 @@
 from django import forms
+from datetime import datetime, timedelta
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from .models import Profile, Doctor, Appiontment
 
@@ -54,10 +56,33 @@ class BookAppointmentForm(forms.ModelForm):
         model = Appiontment
         fields = ['appointment_date', 'appointment_time',]
 
-        widgets={
-            'appointment_date': forms.DateInput(attrs={'type': 'date','class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50'}),
-            'appointment_time': forms.TimeInput(attrs={'type':'time','class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50'}),
+        widgets = {
+            'appointment_date': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'form-input w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
+                'min': datetime.now().date().strftime('%Y-%m-%d'),
+            }),
+            'appointment_time': forms.Select(attrs={
+                'class': 'form-select w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-indigo-200 focus:ring-opacity-50',
+            }),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        appointment_date = cleaned_data.get('appointment_date')
+        appointment_time = cleaned_data.get('appointment_time')
+
+        if appointment_date and appointment_time:
+            now = datetime.now()
+            today = now.date()
+
+            if appointment_date == today:
+                selected_datetime = datetime.combine(appointment_date, appointment_time)
+                if selected_datetime <= now:
+                    raise ValidationError('The selected time must be greater than the current time for today.')
+
+        return cleaned_data
+
 
 class DoctorLoginForm(forms.Form):
 

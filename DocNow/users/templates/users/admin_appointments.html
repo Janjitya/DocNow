@@ -6,48 +6,49 @@
 
 {% block content %}
 
+<!-- Main Content -->
+<div class="flex-1 p-6">
 
-        <!-- Main Content -->
-        <div class="flex-1 p-6">
-
-            <!-- All Appointments Table -->
-            <div class="bg-white shadow-md rounded-lg p-4">
-                <h3 class="text-gray-600 text-lg font-semibold mb-4">All Appointments</h3>
-                <table class="w-full border-collapse">
-                    <thead>
-                        <tr>
-                            <th class="border-b text-left py-2 px-4">#</th>
-                            <th class="border-b text-left py-2 px-4">Patient Name</th>
-                            <th class="border-b text-left py-2 px-4">Age</th>
-                            <th class="border-b text-left py-2 px-4">Date</th>
-                            <th class="border-b text-left py-2 px-4">Time</th>
-                            <th class="border-b text-left py-2 px-4">Doctor</th>
-                            <th class="border-b text-left py-2 px-4">Fees ($)</th>
-                            <th class="border-b text-left py-2 px-4">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for appointment in appointments %}
-                        <tr>
-                            <td class="border-b py-2 px-4">{{ forloop.counter }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.patient.get_full_name }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.patient.age }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.appointment_date }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.appointment_time }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.doctor.name }}</td>
-                            <td class="border-b py-2 px-4">{{ appointment.doctor.fees }}</td>
-                            {% if appointment.status == 'Cancelled' %}
-                            <td class="border-b py-2 px-4 text-red-500">{{ appointment.status }}</td>
-                            {% else %}
-                            <td class="border-b py-2 px-4 text-green-500">{{ appointment.status }}</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                        
-                    </tbody>
-                </table>
-            </div>
+    <!-- All Appointments Table -->
+    <div class="bg-white shadow-md rounded-lg p-4">
+        <h3 class="text-gray-600 text-lg font-semibold mb-4">All Appointments</h3>
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-sm">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border-b text-left py-2 px-4">#</th>
+                        <th class="border-b text-left py-2 px-4">Patient Name</th>
+                        <th class="border-b text-left py-2 px-4">Age</th>
+                        <th class="border-b text-left py-2 px-4">Date</th>
+                        <th class="border-b text-left py-2 px-4">Time</th>
+                        <th class="border-b text-left py-2 px-4">Doctor</th>
+                        <th class="border-b text-left py-2 px-4">Fees ($)</th>
+                        <th class="border-b text-left py-2 px-4">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="border-b py-2 px-4">{{ forloop.counter }}</td>
+                        <td class="border-b py-2 px-4">{{ appointment.patient.get_full_name }}</td>
+                        <td class="border-b py-2 px-4">{{ appointment.patient.age }}</td>
+                        <td class="border-b py-2 px-4">{{ appointment.appointment_date }}</td>
+                        <td class="border-b py-2 px-4">{{ appointment.appointment_time }}</td>
+                        <td class="border-b py-2 px-4">{{ appointment.doctor.name }}</td>
+                        <td class="border-b py-2 px-4">${{ appointment.doctor.fees }}</td>
+                        <td class="border-b py-2 px-4 {% if appointment.status == 'Cancelled' %}text-red-500{% else %}text-green-500{% endif %}">{{ appointment.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center py-4 text-gray-500">
+                            No appointments found.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    
+    </div>
+</div>
 
 {% endblock %}
